@@ -138,22 +138,6 @@ export default function Footer() {
             </a>
             <span className={theme === "minimalist" ? "text-slate-500" : "text-cyan-500"}>•</span>
 
-            {/* AMBIKESH (placeholder) */}
-            <a
-              href="#"
-              className={`
-                px-3 py-1.5 rounded-lg font-mono text-xs font-semibold
-                ${
-                  theme === "minimalist"
-                    ? "bg-slate-200 text-slate-500 border border-slate-300 cursor-not-allowed"
-                    : "bg-slate-800/50 border border-cyan-500/30 text-slate-400 shadow-lg shadow-cyan-500/10 cursor-not-allowed"
-                }
-              `}
-            >
-              Ambikeshwar Dutt Dwivedi (GitHub Soon)
-            </a>
-            <span className={theme === "minimalist" ? "text-slate-500" : "text-cyan-500"}>•</span>
-
             {/* ANKIT */}
             <a
               href="https://github.com/Ankitshahi895"
