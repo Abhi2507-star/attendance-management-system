@@ -17,6 +17,7 @@ import OverallAtt from "./OverallAtt";
 import UpcomingClassesCard from "./UpcomingClassesCard";
 import PerformanceCard from "./PerformanceCard";
 import BunkPlannerModal from "./BunkPlanner";
+import { useTheme } from "../contexts/ThemeContext";
 
 interface SelectedComponentType {
   course: AttendanceResponse["data"]["attendanceCourseComponentInfoList"][0];
@@ -30,9 +31,9 @@ type AttendanceHook = {
   >;
 };
 
-
-
 const Attendance = ({ attendanceData, setAttendanceData }: AttendanceHook) => {
+  const { theme } = useTheme();
+
   const [studentId, setStudentId] = useState<number | null>(null);
   const [selectedComponent, setSelectedComponent] =
     useState<SelectedComponentType | null>(null);
@@ -73,60 +74,79 @@ const Attendance = ({ attendanceData, setAttendanceData }: AttendanceHook) => {
 
   return (
     <div className="min-h-screen relative z-10 overflow-hidden">
-      {/* Animated cyber grid background */}
-      {/* <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute inset-0 opacity-20" style={{
-          backgroundImage: 'linear-gradient(cyan 1px, transparent 1px), linear-gradient(90deg, cyan 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-          animation: 'grid-flow 20s linear infinite'
-        }} />
-      </div> */}
 
-      {/* Glowing orbs */}
-      <div className="fixed top-20 left-20 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none animate-pulse" />
-      <div className="fixed bottom-20 right-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none animate-pulse" style={{ animationDelay: '1s' }} />
+      {/* Glowing rings - cyberpunk only */}
+      {theme === "cyberpunk" && (
+        <>
+          <div className="fixed top-20 left-20 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none animate-pulse" />
+          <div className="fixed bottom-20 right-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none animate-pulse" style={{ animationDelay: "1s" }} />
+        </>
+      )}
 
-      <div className="container mx-auto px-4 py-6 flex-grow relative z-10">
-        {/* Terminal-style Header */}
-        {/* <div className="mb-6 p-4 bg-slate-900/90 border border-cyan-500/50 rounded-lg shadow-2xl shadow-cyan-500/30">
-          <div className="flex items-center gap-2 text-cyan-400 font-mono text-sm mb-2">
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-500" />
-              <div className="w-3 h-3 rounded-full bg-amber-500" />
-              <div className="w-3 h-3 rounded-full bg-emerald-500" />
-            </div>
-            <span className="ml-2">user@attendance-system:~$</span>
-            <span className="animate-pulse">_</span>
-          </div>
-        </div> */}
-
+      <div
+        className={`container mx-auto px-4 py-6 flex-grow relative z-10
+          ${theme === "minimalist" ? "text-slate-800" : ""}
+        `}
+      >
         {/* Profile Card */}
-        <div className="relative rounded-2xl border border-cyan-500/30 bg-slate-900/80 backdrop-blur-xl shadow-2xl shadow-cyan-500/20 p-6 mb-8 transition-all hover:shadow-cyan-500/40 overflow-hidden group">
-          {/* Cyber grid */}
-          {/*<div className="absolute inset-0 opacity-10 pointer-events-none">
-            <div className="absolute inset-0" style={{
-              backgroundImage: 'linear-gradient(cyan 1px, transparent 1px), linear-gradient(90deg, cyan 1px, transparent 1px)',
-              backgroundSize: '20px 20px'
-            }} />
-          </div>*/}
-
-          {/* Glowing border */}
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/0 via-cyan-500/20 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div
+          className={`
+            relative rounded-2xl p-6 mb-8 transition-all overflow-hidden group
+            ${
+              theme === "minimalist"
+                ? "bg-white border-2 border-slate-200 shadow-lg shadow-slate-200/50"
+                : "border border-cyan-500/30 bg-slate-900/80 backdrop-blur-xl shadow-2xl shadow-cyan-500/20"
+            }
+          `}
+        >
+          {/* Cyber glowing border hover lines */}
+          {theme === "cyberpunk" && (
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/0 via-cyan-500/20 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          )}
 
           <div className="relative z-10 flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-4">
               <div className="relative">
-                <User className="h-16 w-16 text-cyan-400" />
-                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-slate-900 animate-pulse" />
+                <User
+                  className={`
+                    h-16 w-16
+                    ${theme === "minimalist" ? "text-blue-600" : "text-cyan-400"}
+                  `}
+                />
+
+                {/* Cyberpunk status dot */}
+                {theme === "cyberpunk" && (
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-slate-900 animate-pulse" />
+                )}
               </div>
+
               <div>
-                <h1 className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-mono">
+                <h1
+                  className={`
+                    text-2xl font-extrabold font-mono
+                    ${
+                      theme === "minimalist"
+                        ? "text-slate-900"
+                        : "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500"
+                    }
+                  `}
+                >
                   {attendanceData.data.fullName.toUpperCase()}
                 </h1>
-                <p className="text-sm text-slate-400 font-medium font-mono">
+
+                <p
+                  className={`text-sm font-medium font-mono
+                    ${theme === "minimalist" ? "text-slate-600" : "text-slate-400"}
+                  `}
+                >
                   {attendanceData.data.registrationNumber} • {attendanceData.data.branchShortName}-{attendanceData.data.sectionName}
                 </p>
-                <p className="text-sm text-slate-500 font-medium font-mono">
+
+                <p
+                  className={`text-sm font-medium font-mono
+                    ${theme === "minimalist" ? "text-slate-500" : "text-slate-500"}
+                  `}
+                >
                   {attendanceData.data.degreeName} — SEM {attendanceData.data.semesterName}
                 </p>
               </div>
@@ -134,20 +154,35 @@ const Attendance = ({ attendanceData, setAttendanceData }: AttendanceHook) => {
 
             {/* Buttons Container */}
             <div className="flex items-center gap-3 flex-wrap">
-              {/* Bunk Planner Button */}
+
+              {/* BUNK PLANNER BUTTON */}
               <button
                 type="button"
                 onClick={() => setIsBunkPlannerOpen(true)}
-                className="px-5 py-2.5 rounded-lg text-sm font-bold text-slate-900 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-300 hover:to-pink-400 transition-all flex items-center gap-2 shadow-lg shadow-purple-500/50 hover:shadow-purple-500/80 font-mono"
+                className={`
+                  px-5 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all
+                  ${
+                    theme === "minimalist"
+                      ? "bg-blue-600 text-white hover:bg-blue-500 shadow"
+                      : "text-slate-900 bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-300 hover:to-pink-400 shadow-lg shadow-purple-500/50"
+                  }
+                `}
               >
                 <Calculator className="h-4 w-4" /> SMART BUNK PLANNER
               </button>
 
-              {/* Logout Button */}
+              {/* LOGOUT BUTTON */}
               <button
                 type="button"
                 onClick={handleLogout}
-                className="px-5 py-2.5 rounded-lg text-sm font-bold text-slate-900 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 transition-all flex items-center gap-2 shadow-lg shadow-cyan-500/50 hover:shadow-cyan-500/80 font-mono"
+                className={`
+                  px-5 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all
+                  ${
+                    theme === "minimalist"
+                      ? "bg-red-600 text-white hover:bg-red-500 shadow"
+                      : "text-slate-900 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 shadow-lg shadow-cyan-500/50"
+                  }
+                `}
               >
                 <LogOut className="h-4 w-4" /> LOGOUT
               </button>
@@ -161,7 +196,7 @@ const Attendance = ({ attendanceData, setAttendanceData }: AttendanceHook) => {
           <OverallAtt />
         </div>
 
-        {/* Upcoming Classes */}
+        {/* Upcoming Classes Card */}
         <div className="mb-10">
           <UpcomingClassesCard />
         </div>
@@ -171,27 +206,40 @@ const Attendance = ({ attendanceData, setAttendanceData }: AttendanceHook) => {
           {attendanceData.data.attendanceCourseComponentInfoList.map((course, courseIdx) => (
             <div
               key={course.courseCode}
-              className="relative rounded-xl border border-cyan-500/30 bg-slate-900/80 backdrop-blur-xl shadow-xl hover:shadow-cyan-500/40 hover:-translate-y-2 transition-all duration-300 p-5 group overflow-hidden"
+              className={`
+                relative rounded-xl p-5 group transition-all duration-300 overflow-hidden
+                ${
+                  theme === "minimalist"
+                    ? "bg-white border-2 border-slate-200 shadow-md hover:shadow-xl hover:-translate-y-1"
+                    : "border border-cyan-500/30 bg-slate-900/80 backdrop-blur-xl shadow-xl hover:shadow-cyan-500/40 hover:-translate-y-2"
+                }
+              `}
               style={{ animationDelay: `${courseIdx * 100}ms` }}
             >
-              {/* Grid pattern */}
-              {/*<div className="absolute inset-0 opacity-10 pointer-events-none">
-                <div className="absolute inset-0" style={{
-                  backgroundImage: 'linear-gradient(cyan 1px, transparent 1px), linear-gradient(90deg, cyan 1px, transparent 1px)',
-                  backgroundSize: '20px 20px'
-                }} />
-              </div>*/}
-
-              {/* Hover glow */}
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {/* Cyberpunk overlay hover */}
+              {theme === "cyberpunk" && (
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              )}
 
               <div className="relative z-10">
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-sm font-bold text-cyan-300 font-mono">
-                    {course.courseName.toUpperCase()}
-                  </h3>
-                </div>
-                <p className="text-xs text-slate-500 mb-4 font-mono border border-cyan-500/30 bg-cyan-500/10 px-2 py-1 rounded inline-block">
+                <h3
+                  className={`text-sm font-bold font-mono mb-1
+                    ${theme === "minimalist" ? "text-slate-900" : "text-cyan-300"}
+                  `}
+                >
+                  {course.courseName.toUpperCase()}
+                </h3>
+
+                <p
+                  className={`
+                    text-xs font-mono mb-3 inline-block rounded px-2 py-1 border
+                    ${
+                      theme === "minimalist"
+                        ? "border-slate-300 bg-slate-100 text-slate-700"
+                        : "border border-cyan-500/30 bg-cyan-500/10 text-slate-500"
+                    }
+                  `}
+                >
                   CODE: {course.courseCode}
                 </p>
 
@@ -202,34 +250,55 @@ const Attendance = ({ attendanceData, setAttendanceData }: AttendanceHook) => {
                   const message = getAttendanceMessage(present, total);
 
                   return (
-                    <div
-                      key={component.componentName}
-                      className="border-t border-cyan-500/30 pt-4 mt-3 space-y-2"
-                    >
+                    <div key={component.componentName} className="border-t border-slate-200 pt-4 mt-3 space-y-2">
+
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-slate-300 font-bold font-mono">
+                        <span className="text-sm font-bold font-mono">
                           {component.componentName.toUpperCase()}
                         </span>
+
                         <span
-                          className={`text-sm font-bold font-mono ${
-                            percentage >= 75 ? "text-emerald-400" : "text-red-400"
-                          }`}
+                          className={`text-sm font-bold font-mono
+                            ${
+                              percentage >= 75
+                                ? theme === "minimalist"
+                                  ? "text-emerald-600"
+                                  : "text-emerald-400"
+                                : theme === "minimalist"
+                                ? "text-red-600"
+                                : "text-red-400"
+                            }
+                          `}
                         >
                           {component.presentPercentageWith}
                         </span>
                       </div>
 
-                      <p className="text-xs text-slate-500 font-mono">
-                        PRESENT: {present}/{total}
-                      </p>
+                      <p className="text-xs font-mono">PRESENT: {present}/{total}</p>
 
-                      <p className="text-xs font-bold text-cyan-400 font-mono bg-cyan-500/10 px-2 py-1 rounded border border-cyan-500/30">
+                      <p
+                        className={`
+                          text-xs font-bold font-mono px-2 py-1 rounded border
+                          ${
+                            theme === "minimalist"
+                              ? "bg-blue-50 border-blue-300 text-blue-600"
+                              : "text-cyan-400 bg-cyan-500/10 border border-cyan-500/30"
+                          }
+                        `}
+                      >
                         {message}
                       </p>
 
                       <button
                         type="button"
-                        className="mt-3 w-full px-4 py-2 text-xs rounded-lg font-bold text-slate-900 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 transition-all shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/60 font-mono"
+                        className={`
+                          mt-3 w-full px-4 py-2 text-xs rounded-lg font-bold font-mono transition-all
+                          ${
+                            theme === "minimalist"
+                              ? "bg-blue-600 text-white hover:bg-blue-500 shadow"
+                              : "text-slate-900 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 shadow-lg shadow-cyan-500/30"
+                          }
+                        `}
                         onClick={() => {
                           setSelectedComponent({ course, component });
                           setIsDaywiseModalOpen(true);
@@ -246,13 +315,24 @@ const Attendance = ({ attendanceData, setAttendanceData }: AttendanceHook) => {
         </div>
 
         {/* Daywise Modal */}
-        {isDaywiseModalOpen && selectedComponent && (
-          <div className="fixed inset-0 bg-slate-950/90 backdrop-blur-md flex items-center justify-center z-50 px-3">
+          {isDaywiseModalOpen && selectedComponent && (
+            <div
+              className={`
+                fixed inset-0 flex items-center justify-center z-50 px-3
+                backdrop-blur-md
+                ${theme === "minimalist"
+                  ? "bg-black/20"
+                  : "bg-slate-950/90"}
+              `}
+            >
+
             <div className="relative bg-slate-900 border border-cyan-500/50 rounded-2xl shadow-2xl shadow-cyan-500/50 p-6 max-w-2xl w-full">
+
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-bold text-cyan-400 font-mono">
                   {selectedComponent.course.courseName.toUpperCase()} — {selectedComponent.component.componentName.toUpperCase()}
                 </h2>
+
                 <button
                   className="text-cyan-400 hover:text-cyan-300 transition-colors"
                   onClick={() => setIsDaywiseModalOpen(false)}
@@ -275,26 +355,15 @@ const Attendance = ({ attendanceData, setAttendanceData }: AttendanceHook) => {
         )}
 
         {/* Bunk Planner Modal */}
-        <BunkPlannerModal 
+        <BunkPlannerModal
           isOpen={isBunkPlannerOpen}
           onClose={() => setIsBunkPlannerOpen(false)}
           currentAttendance={{
             present: attendanceData.data.attendanceCourseComponentInfoList[0]?.attendanceCourseComponentNameInfoList[0]?.numberOfPresent || 0,
-            total: attendanceData.data.attendanceCourseComponentInfoList[0]?.attendanceCourseComponentNameInfoList[0]?.numberOfPeriods || 0
+            total: attendanceData.data.attendanceCourseComponentInfoList[0]?.attendanceCourseComponentNameInfoList[0]?.numberOfPeriods || 0,
           }}
         />
       </div>
-
-      <style jsx>{`
-        @keyframes grid-flow {
-          0% {
-            transform: translateY(0);
-          }
-          100% {
-            transform: translateY(40px);
-          }
-        }
-      `}</style>
     </div>
   );
 };
