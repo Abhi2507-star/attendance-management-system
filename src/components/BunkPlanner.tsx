@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, TrendingUp, TrendingDown, AlertTriangle, CheckCircle, XCircle, Zap, Target, X } from 'lucide-react';
+import { TrendingUp, TrendingDown, AlertTriangle, CheckCircle, XCircle, Zap, Target, X } from 'lucide-react';
 
 interface BunkPlannerModalProps {
   isOpen: boolean;

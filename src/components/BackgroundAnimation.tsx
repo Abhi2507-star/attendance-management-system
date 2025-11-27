@@ -19,7 +19,7 @@ export default function BackgroundAnimation() {
     window.addEventListener("resize", resizeCanvas);
 
     const columns = Math.floor(canvas.width / 20);
-    const drops = [];
+    const drops: number[] = [];
     for (let i = 0; i < columns; i++) drops[i] = Math.random() * canvas.height;
 
     const chars = "01";

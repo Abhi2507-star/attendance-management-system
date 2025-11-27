@@ -1,6 +1,6 @@
 import axios from "axios";
 import { motion } from "framer-motion";
-import { Calendar, Clock, CheckCircle2, XCircle, AlertCircle, Cpu, Zap } from "lucide-react";
+import { Clock, XCircle, AlertCircle, Cpu, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import type {
   AttendanceApiResponse,

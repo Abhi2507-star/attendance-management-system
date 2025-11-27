@@ -1,8 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { BookOpen, Eye, EyeOff, Sparkles } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, easeOut } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
 
 import {
@@ -19,7 +19,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
+    transition: { duration: 0.6, ease: easeOut },
   },
 };
 
@@ -29,7 +29,7 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.7, ease: "easeOut" },
+    transition: { duration: 0.7, ease: easeOut },
   },
 };
 
@@ -41,7 +41,7 @@ const itemVariants = {
     transition: {
       delay: 0.2 + i * 0.08,
       duration: 0.4,
-      ease: "easeOut",
+      ease: easeOut,
     },
   }),
 };
