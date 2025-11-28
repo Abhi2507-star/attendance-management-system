@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
+import { ThemeProvider, useTheme } from "./Contexts/ThemeContext";
 import Attendance from "./components/Attendance";
 import Footer from "./components/Footer";
 import LoginForm from "./components/LoginForm";

@@ -17,7 +17,7 @@ import OverallAtt from "./OverallAtt";
 import UpcomingClassesCard from "./UpcomingClassesCard";
 import PerformanceCard from "./PerformanceCard";
 import BunkPlannerModal from "./BunkPlanner";
-import { useTheme } from "../contexts/ThemeContext";
+import { useTheme } from "../Contexts/ThemeContext";
 
 interface SelectedComponentType {
   course: AttendanceResponse["data"]["attendanceCourseComponentInfoList"][0];

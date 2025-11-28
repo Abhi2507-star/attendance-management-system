@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { Eye, EyeOff } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { motion, easeOut } from "framer-motion";
-import { useTheme } from "../contexts/ThemeContext";
+import { useTheme } from "../Contexts/ThemeContext";
 
 import {
   AUTH_COOKIE_NAME,

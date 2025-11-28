@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState, memo } from "react";
 import { AUTH_COOKIE_NAME } from "../types/CookieVars";
 import type { AttendanceDataSummaryResponse } from "../types/response";
-import { useTheme } from "../contexts/ThemeContext";
+import { useTheme } from "../Contexts/ThemeContext";
 
 const OverallAtt = memo(function OverallAtt() {
   const [data, setData] = useState<AttendanceDataSummaryResponse | null>(null);

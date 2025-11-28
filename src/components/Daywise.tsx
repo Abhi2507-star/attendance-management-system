@@ -7,7 +7,7 @@ import type {
   DaywiseReportProps,
   LectureListProps,
 } from "../types/response";
-import { useTheme } from "../contexts/ThemeContext";
+import { useTheme } from "../Contexts/ThemeContext";
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);

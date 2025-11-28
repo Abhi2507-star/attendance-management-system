@@ -3,7 +3,7 @@ import { CalendarDays, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AUTH_COOKIE_NAME } from "../types/CookieVars";
 import Cookies from "js-cookie";
-import { useTheme } from "../contexts/ThemeContext";
+import { useTheme } from "../Contexts/ThemeContext";
 
 type UpcomingClass = {
   courseName: string;
